@@ -1,24 +1,27 @@
-<form action="" method="post">
-<p><label>Логин</label><input type="text" name="login" value=""  /></p>
-<p><label>Пароль</label><input type="password" name="pass" value=""  /></p>
-<p><label></label><input type="submit" name="submit" value="Login"  /></p>
-</form>
-
 <?php
 
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+
+require_once('../include/config.php');
+
 if (isset($_POST['submit'])) {
-
-    $login = trim($_POST['login']);
-    $pass = trim($_POST['pass']);
     
-    if ($user->login($login, $pass)) { 
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-        //подключается на главную страницу
+    if ($getUser->login($username, $password)) {
+        //logged in return to index page
         header('Location: index.php');
         exit;
-    
     } else {
-        $msg = 'Неверное имя пользователя или пароля';
+        $msg = 'Ошибка входа</p>';
     }
-    
 }
+?>
+
+<form action="login.php" method="post">
+    <p><label>Логин</label><input type="text" name="username" value=""  /></p>
+    <p><label>Пароль</label><input type="password" name="password" value=""  /></p>
+    <p><label></label><input type="submit" name="login" value="Login"  /></p>
+</form>

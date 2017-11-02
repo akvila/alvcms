@@ -2,10 +2,19 @@
 
 class user_class {
     
-    private $db;
-    
-    public function __construct($db) {
-        $this->db = $db;
+    public function getUsers($db) {
+        
+        $query = "SELECT * FROM users WHERE username = :username AND password = :password";
+        $getUser = $db->prepare($query);
+        
+        $getUser->execute(
+                array(
+                    'username' => $_POST["username"],
+                    'password' => $_POST["password"],
+                    )
+                );
+        $getUser = $getUser->fetch();
+        return $getUser;
     }
+    
 }
-

@@ -21,10 +21,26 @@ try {
 }
 
 //автозагрузка классов
-function __autoload($class) {
-    $class = str_replace("..", "", $class);
-    require_once("classes/$class.php");
+function __autoload($className) {
+
+    $classpath = strtolower($className);
+    
+    $classpath = 'classes/' . $className. '.php';
+    if (file_exists($classpath)) {
+        require_once $classpath;
+    } else {
+        echo 'Нет файла: '.$classpath;
+    }
+
+    //для вызова из admin
+    $classpath = '../classes/' . $className . '.php';
+    if (file_exists($classpath)) {
+        require_once $classpath;
+    } else {
+        echo 'Нет файла: '.$classpath;
+    }
 }
 
 //$user = new User($db);
 $bootstrap = new bootstrap;
+
