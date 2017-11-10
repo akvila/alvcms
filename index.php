@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 require_once('include/config.php');
 
 //вывод всех постов 
-$post = $bootstrap->showPost($db);
+$post = $obj->showPost($db);
 
 include_once('public/home.php');
 

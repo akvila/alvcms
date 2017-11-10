@@ -21,26 +21,50 @@ try {
 }
 
 //автозагрузка классов
-function __autoload($className) {
+//function __autoload($className) {
+//
+//    $classpath = strtolower($className);
+//    
+//    $classpath = '../classes/' . $className. '.php';
+//    if (file_exists($classpath)) {
+//        require_once $classpath;
+//    } else {
+//        echo "Нет файла: $classpath <br>";
+//    }
+//
+//    //для вызова из admin
+//    $classpath = '../classes/' . $className . '.php';
+//    if (file_exists($classpath)) {
+//        require_once $classpath;
+//    } else {
+//        echo 'Нет файла: '.$classpath;
+//    }
+//}
 
-    $classpath = strtolower($className);
-    
+    function autoload($className) {
     $classpath = 'classes/' . $className. '.php';
-    if (file_exists($classpath)) {
+    if (is_readable($classpath)) {
         require_once $classpath;
     } else {
-        echo 'Нет файла: '.$classpath;
+        echo "Нет файла: $classpath <br>";
     }
-
-    //для вызова из admin
-    $classpath = '../classes/' . $className . '.php';
-    if (file_exists($classpath)) {
-        require_once $classpath;
-    } else {
-        echo 'Нет файла: '.$classpath;
-    }
+    //var_dump($className);
 }
 
-//$user = new User($db);
-$bootstrap = new bootstrap;
+    function autoloadAdmin($className) {
+    $classpath = '../classes/' . $className . '.php';
+    if (is_readable($classpath)) {
+        require_once $classpath;
+    } else {
+        echo "Нет файла: $classpath <br>";
+    }
+    //var_dump($className);
+}
 
+spl_autoload_register("autoload");
+spl_autoload_register("autoloadAdmin");
+//$user = new User($db);
+$obj  = new bootstrap();
+$obj2 = new userClass(); 
+
+//$bootstrap = new bootstrap;
